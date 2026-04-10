@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+.env
+venv/
+.vscode/
+*.pkl
+inputs/datasets/raw/*
+!inputs/datasets/raw/.gitkeep
+outputs/v1/*
+!outputs/v1/.gitkeep
+.DS_Store
