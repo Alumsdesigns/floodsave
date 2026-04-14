@@ -78,9 +78,3 @@ graph TD
     T3 --> PASS
     T3 --> FAIL
 ```
-
-## College criteria covered
-- 1.2 Hypotheses in README — Merit
-- 2.3 Statistical validation — Merit
-- 4.3 Hypothesis conclusions on dashboard — Merit
-- D3 Three hypotheses validated — Distinction
