@@ -1,59 +1,86 @@
-
 # FloodSave — Flood Risk Prediction System
 
 ## Overview
 FloodSave is an intelligent flood risk prediction platform that classifies 
-flood risk and predicts flood depth for any location using geographic 
-and environmental data. Built initially for Ireland with a scalable 
-architecture designed for expansion.
+flood risk and predicts flood depth for any Irish location using geographic 
+and environmental data. Built on real-time OPW hydrometric station data 
+with a scalable architecture designed for future global expansion.
+
+---
+
+## Value and Impact
+
+FloodSave addresses a genuine gap in the Irish market. No existing tool 
+provides property-level flood risk intelligence built specifically on Irish 
+OPW data. The platform delivers measurable value across four sectors:
+
+| Sector | Problem Solved | Impact |
+|--------|---------------|--------|
+| Construction | Site risk unknown before breaking ground | Reduces planning delays and insurance costs |
+| Insurance | Flood depth estimates rely on generic European models | Enables accurate Irish property premium pricing |
+| Local Government | Emergency planning uses outdated static maps | Live station data supports dynamic response planning |
+| Public | No accessible tool to check personal flood risk | Empowers informed safety decisions during heavy rainfall |
+
+The Western counties of Ireland (Galway, Mayo, Clare) receive significantly 
+higher rainfall than Eastern counties due to Atlantic weather systems hitting 
+the coast before reaching the rain shadow created by the Wicklow, Silvermine 
+and Slieve Bloom mountain ranges. FloodSave quantifies this difference 
+statistically — Western stations show mean flood depth of 1.028m versus 
+0.767m in Eastern counties (p = 0.0007).
 
 ---
 
 ## Current Coverage
- 🇮🇪 Ireland (active) — OPW flood zone data
+- Ireland (active) — OPW hydrometric station network
 
 ---
 
 ## Dataset Content
-The current dataset is sourced from the Irish Office of Public Works 
-(OPW) via floodinfo.ie and data.gov.ie. It contains flood zone 
-classifications, river monitoring data, and property-level risk 
-indicators across Irish counties.
 
-Each row represents a geographic location with the following attributes:
-- Elevation above sea level (metres)
-- Distance to nearest river or water body (metres)
-- County and region
-- OPW flood zone classification
-- Historical flood depth records
+The dataset is sourced from the Irish Office of Public Works (OPW) 
+Real-Time Water Levels API at waterlevel.ie/geojson — a live endpoint 
+updated continuously by OPW hydrometric data loggers across Ireland.
+
+**Data freshness:** The OPW API provides real-time readings. The station 
+list was pulled on April 2026 and contains 457 active monitoring stations. 
+Each station transmits water level data via GPRS telemetry at regular 
+intervals. The dataset is licensed under Creative Commons CC-BY 4.0.
+
+Each row represents one OPW hydrometric monitoring station with the 
+following attributes:
+
+| Column | Description |
+|--------|-------------|
+| name | Station name e.g. Sandy Mills |
+| ref | OPW station reference number |
+| longitude | GPS longitude coordinate |
+| latitude | GPS latitude coordinate |
+| region | Derived region — West, Midlands, East |
+| elevation_m | Estimated elevation in metres |
+| distance_to_river_m | Estimated distance to nearest river |
+| flood_risk | Classified risk — High, Medium, Low |
+| flood_depth_m | Estimated flood depth in metres |
+| elevation_category | Binned elevation — Low, Medium, High |
+| distance_category | Binned distance — Very Close, Close, Far |
+| flood_risk_encoded | Numeric encoding — High=2, Medium=1, Low=0 |
 
 ---
 
 ## Business Requirements
+
 1. The client wants to understand which geographic and environmental 
    features correlate most strongly with flood risk classification.
 2. The client wants to predict the flood risk category 
    (High / Medium / Low) for any Irish location given its attributes.
 3. The client wants to predict the expected flood depth in metres 
-   for a given location and understand the geographic extent of 
-   flood risk in their area, enabling informed decisions about 
-   safety, insurance, and evacuation planning.
+   for a given location and understand the geographic extent of flood 
+   risk in their area, enabling informed decisions about safety, 
+   insurance, and evacuation planning.
 
 ---
 
-## Future Enhancements cuurently out of scope
-
-## Future 
-- Real-time rainfall API integration
-- Live flood spread calculation
-- Safe route navigation by foot
-- Safe route navigation by road
-- UK and East Africa coverage
-
-
---- 
-
 ## User Stories
+
 - As a construction site manager, I want to enter a location and see 
   its flood risk classification so I can assess site safety before 
   breaking ground.
@@ -62,19 +89,43 @@ Each row represents a geographic location with the following attributes:
 - As a member of the public, I want to understand the flood risk in 
   my area during heavy rainfall so I can make informed safety decisions.
 
---- 
-## Hypotheses
-1. Properties with elevation below 10 metres have significantly higher 
-   flood risk classification than properties above 10 metres.
-   - Validation: Chi-square test on elevation_category vs flood_risk_class
+---
 
-2. Distance to nearest river is the strongest predictor of flood risk, 
-   with properties within 500m having higher risk.
-   - Validation: Feature importance analysis and independent t-test
+## Hypotheses and Validation Results
 
-3. Western counties (Galway, Mayo, Clare) have higher average predicted 
-   flood depth than Eastern counties due to higher rainfall.
-   - Validation: Independent t-test on county_region vs max_flood_depth
+### Hypothesis 1 — Elevation and Flood Risk
+Properties with elevation below 10 metres have significantly higher 
+flood risk classification than properties above 10 metres.
+
+- Test: Chi-square test on elevation_category vs flood_risk
+- Result: SUPPORTED
+- p-value: 0.0000
+- Finding: Low elevation stations have significantly higher flood risk. 
+  The relationship between elevation category and flood risk category 
+  is statistically significant beyond any reasonable threshold.
+
+### Hypothesis 2 — Distance to River and Flood Risk
+Distance to nearest river is the strongest predictor of flood risk, 
+with stations within 100m having significantly higher risk.
+
+- Test: Independent t-test on distance group vs flood_risk_encoded
+- Result: SUPPORTED
+- p-value: 0.0000
+- Finding: Stations within 100m of a river have mean risk score 1.19 
+  versus 0.74 for stations beyond 100m — a statistically significant 
+  difference confirming proximity to water as a key risk driver.
+
+### Hypothesis 3 — Western vs Eastern Flood Depth
+Western counties have higher average predicted flood depth than 
+Eastern counties due to higher Atlantic rainfall.
+
+- Test: Independent t-test on region vs flood_depth_m
+- Result: SUPPORTED
+- p-value: 0.0007
+- Finding: Western stations mean depth 1.028m versus Eastern 0.767m. 
+  The difference is explained by Atlantic weather systems hitting the 
+  Western coast before reaching the rain shadow of the Wicklow and 
+  Silvermine mountain ranges.
 
 ---
 
@@ -91,14 +142,12 @@ Each row represents a geographic location with the following attributes:
 - **Model output:** Risk category label displayed on dashboard predictor page
 - **Training data:** OPW flood zone data with engineered features
 
----
-
 ### Regression Task
 - **Aim:** Predict expected flood depth in metres for a given location
 - **Learning method:** Supervised regression using Random Forest Regressor
 - **Ideal outcome:** Model predicts flood depth within acceptable margin
-- **Success metric:** R² score above 0.75 on test set
-- **Failure metric:** R² below 0.75 — model performance noted on dashboard
+- **Success metric:** R2 score above 0.75 on test set
+- **Failure metric:** R2 below 0.75 — model performance noted on dashboard
 - **Model output:** Predicted depth in metres shown on dashboard
 - **Training data:** Historical flood depth records from OPW dataset
 
@@ -126,35 +175,9 @@ Each row represents a geographic location with the following attributes:
   returns risk classification, flood depth prediction and folium map. 
   Answers BR2 and BR3.
 - **Page 5 — Model Performance:** Confusion matrix, classification report, 
-  R² score, Actual vs Predicted plot and feature importance. Answers BR2 and BR3.
+  R2 score, Actual vs Predicted plot and feature importance. Answers BR2 and BR3.
 
 ---
-
-## Tree Structure
-
-floodsave/
-│
-├── app.py                 # Streamlit entry point, the app runs, dashboard starts here
-├── requirements.txt       # Python packages list
-├── .gitignore             # Tells git what NOT to track i.e. venv, cache, raw data files
-├── README.md              # Project documentation (we write this now)
-│
-├── app_pages/
-│   └── __init__.py        # Empty file, makes folder a Python package
-│
-├── src/
-│   └── __init__.py        # Same as above
-│
-├── inputs/
-│   └── datasets/
-│       └── raw/
-│           └── .gitkeep   # Empty file, just holds the folder in git
-│
-├── outputs/
-│   └── v1/
-│       └── .gitkeep       # Same as above
-│
-└── jupyter_notebooks/     # Notebooks go here later
 
 ## Libraries
 
@@ -170,59 +193,14 @@ floodsave/
 
 ---
 
+## Future Enhancements
 
-
-## Libraries & Purpose
-
-run 
-> pip install streamlit scikit-learn matplotlib seaborn plotly scipy
-
-### Streamlit
-
-Builds the interactive dashboard for data exploration and model insights. Used to build the interactive dashboard interface, allowing users to explore data, models, and visualisations in real time.
-
-### scikit-learn
-
- Core machine learning library used for:
-
-Training models (e.g. Random Forest Classifier & Regressor)
-Supports Hyperparameter tuning with GridSearchCV
-Model evaluation and preprocessing
-
-### Matplotlib
-
-Provides foundational core plotting capabilities for generating static charts and visualisations within notebooks.
-
-### Seaborn
-
-Built on top of Matplotlib, used for:
-
-Enhanced statistical visualisations
-Example heatmaps, boxplots, and distribution plots
-Cleaner and more interpretable graphics
-
-### Plotly
-
-Enables interactive visualisations in the dashboard:
-Delivers interactive charts with zoom, hover, and dynamic filtering in the dashboard. These are rich, user-friendly charts for better insights
-
-
-### SciPy
-
-Performs statistical tests (e.g. t-tests, chi-square) for hypothesis validation. Used for statistical analysis, including:
-
-Hypothesis testing (e.g. Chi-square tests, t-tests)
-Supporting validation of analytical findings
-
-
-#### Summary
-
-These libraries together power:
-
-Data visualisation (static + interactive)
-Machine learning modelling and optimisation
-Statistical analysis and hypothesis testing
-A user-friendly interactive dashboard
-
-
-
+- Real-time rainfall API integration
+- Live flood spread calculation
+- Safe route navigation by foot
+- Safe route navigation by road
+- UK and East Africa coverage
+- Land use suitability analysis — data centre placement, 
+  crop suitability, solar and wind farm site selection 
+  using flood risk combined with sunshine hours, 
+  rainfall and soil type data
