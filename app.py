@@ -1,4 +1,5 @@
 import streamlit as st
+from src.styles import apply_custom_css 
 from app_pages.page_summary import page_summary
 
 st.set_page_config(
@@ -6,5 +7,7 @@ st.set_page_config(
     page_icon="🌊",
     layout="wide"
 )
+
+apply_custom_css() 
 
 page_summary()
