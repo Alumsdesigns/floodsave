@@ -1,4 +1,3 @@
-# src/data_management.py
 # Purpose: Single source of truth for loading data across all dashboard pages
 # Any page that needs data imports from here — never loads CSV directly
 
