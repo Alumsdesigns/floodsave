@@ -1,4 +1,5 @@
 import streamlit as st
+from app_pages.page_summary import page_summary
 
 st.set_page_config(
     page_title="FloodSave",
@@ -6,7 +7,4 @@ st.set_page_config(
     layout="wide"
 )
 
-st.title("FloodSave: Irish Flood Risk Prediction System")
-st.write("Irish Flood Risk Prediction System")
-
-
+page_summary()
