@@ -1,4 +1,3 @@
-# src/ml_pipeline.py
 # Purpose: Load trained models and run predictions for dashboard pages
 # Any page that needs predictions imports from here — never loads pkl directly
 
