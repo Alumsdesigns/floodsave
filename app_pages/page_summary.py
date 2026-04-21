@@ -1,4 +1,3 @@
-# app_pages/page_summary.py
 # Purpose: Project summary page — overview, dataset, business requirements
 # Criteria: 1.1, 6.1
 
