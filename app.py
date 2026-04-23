@@ -3,6 +3,7 @@ from src.styles import apply_custom_css
 from app_pages.page_summary import page_summary
 from app_pages.page_flood_risk_study import page_flood_risk_study
 from app_pages.page_hypothesis_validation import page_hypothesis_validation
+from app_pages.page_risk_predictor import page_risk_predictor
 
 st.set_page_config(
     page_title="FloodSave",
@@ -37,6 +38,6 @@ elif page == "Flood Risk Study":
 elif page == "Hypothesis Validation":
     page_hypothesis_validation()
 elif page == "Risk Predictor":
-    st.write("Coming soon — ML prediction page")
+    page_risk_predictor()
 elif page == "Model Performance":
     st.write("Coming soon — Model metrics page")

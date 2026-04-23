@@ -1,4 +1,3 @@
-# app_pages/page_hypothesis_validation.py
 # Purpose: Display 3 hypothesis results with statistical evidence
 # Criteria: 1.2, 2.3, 4.3, D3
 

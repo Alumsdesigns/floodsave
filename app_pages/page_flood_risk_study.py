@@ -1,4 +1,3 @@
-# app_pages/page_flood_risk_study.py
 # Purpose: EDA page with 4 interactive Plotly charts answering BR1
 # Criteria: 3.1, 6.2, 6.4, 6.5, D5
 
