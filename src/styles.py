@@ -1,3 +1,4 @@
+# src/styles.py
 # Purpose: Shared CSS and reusable UI components for all dashboard pages
 # Call apply_custom_css() once in app.py — all pages inherit styles
 
@@ -7,23 +8,51 @@ import streamlit as st
 def apply_custom_css():
     st.markdown("""
     <style>
-    /* ── Layout ── */
-    .appview-container .main .block-container {
-            padding-top: 1rem;
-            padding-bottom: 2rem;
-            padding-left: 2rem;
-            padding-right: 2rem;
-            max-width: 1100px;
+    /*  Base layout override
+       Target the specific Streamlit container to avoid
+       fighting the default 6rem top padding */
+    .stMainBlockContainer {
+        padding: 2.5rem 2rem 2rem;
+        max-width: 1100px;
     }
 
-    /* ── Sidebar ── */
-    section[data-testid="stSidebar"] {
+    /* Sidebar ── */
+    .stSidebar {
         min-width: 220px;
         max-width: 260px;
     }
 
-    section[data-testid="stSidebar"] .fs-title {
+    .stSidebar .fs-title {
         font-size: 1.2rem;
+    }
+
+    /* ── Hamburger replacement ── */
+    [data-testid="collapsedControl"] {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 2.2rem;
+        height: 2.2rem;
+        background: #1a1a2e;
+        border-radius: 6px;
+        position: fixed;
+        top: 0.6rem;
+        left: 0.6rem;
+        z-index: 999;
+        cursor: pointer;
+    }
+
+    [data-testid="collapsedControl"]::before {
+        content: "";
+        display: block;
+        width: 16px;
+        height: 2px;
+        background: #fff;
+        box-shadow: 0 5px 0 #fff, 0 10px 0 #fff;
+    }
+
+    button[data-testid="baseButton-headerNoPadding"] {
+        display: none;
     }
 
     /* ── Typography ── */
@@ -38,32 +67,32 @@ def apply_custom_css():
     .fs-subtitle {
         font-size: 0.95rem;
         color: #555;
-        margin: 0.2rem 0 0.8rem 0;
+        margin: 0.2rem 0 0.8rem;
     }
 
     /* ── Section header ── */
     .fs-section {
+        display: inline-block;
         font-size: 1.05rem;
         font-weight: 600;
         color: #1a1a2e;
-        margin: 1rem 0 0.4rem 0;
+        margin: 0.8rem 0 0.4rem;
         padding-bottom: 0.25rem;
         border-bottom: 2px solid #4a90d9;
-        display: inline-block;
     }
 
-    /* ── Cards ── */
+    /* ── Card ── */
     .fs-card {
-        background: #ffffff;
+        background: #fff;
         border: 1px solid #e2e2e2;
         border-radius: 10px;
         padding: 1rem 1.2rem;
-        text-align: center;
-        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
         margin: 0.3rem 0;
+        text-align: center;
+        box-shadow: 0 1px 4px rgba(0,0,0,.05);
     }
 
-    .fs-card-label {
+    .fs-card__label {
         font-size: 0.72rem;
         font-weight: 600;
         color: #555;
@@ -72,14 +101,14 @@ def apply_custom_css():
         margin-bottom: 0.3rem;
     }
 
-    .fs-card-value {
+    .fs-card__value {
         font-size: 1.7rem;
         font-weight: 700;
         color: #1a1a2e;
         line-height: 1.2;
     }
 
-    .fs-card-sub {
+    .fs-card__sub {
         font-size: 0.8rem;
         color: #444;
         margin-top: 0.25rem;
@@ -97,135 +126,98 @@ def apply_custom_css():
         line-height: 1.5;
     }
 
-    /* ── Result box ── */
+    /* ── Result box — single style, no colour variant ── */
     .fs-result {
         background: #f6fff6;
         border: 1px solid #a9dfbf;
         border-radius: 10px;
-        padding: 1.2rem;
-        text-align: center;
-        margin: 0.8rem 0;
+        padding: 0.8rem 1rem;
+        font-size: 0.88rem;
+        color: #333;
+        margin: 0.5rem 0;
+        line-height: 1.5;
     }
 
     /* ── Risk badges ── */
-    .fs-badge-high {
+    .fs-badge {
+        display: inline-block;
+        border-radius: 20px;
+        padding: 0.25rem 0.8rem;
+        font-size: 0.85rem;
+        font-weight: 600;
+    }
+
+    .fs-badge--high {
         background: #ffe5e5;
         color: #c0392b;
         border: 1px solid #f5b7b1;
-        border-radius: 20px;
-        padding: 0.25rem 0.8rem;
-        font-size: 0.85rem;
-        font-weight: 600;
-        display: inline-block;
     }
 
-    .fs-badge-medium {
+    .fs-badge--medium {
         background: #fff3e0;
         color: #d35400;
         border: 1px solid #fad7a0;
-        border-radius: 20px;
-        padding: 0.25rem 0.8rem;
-        font-size: 0.85rem;
-        font-weight: 600;
-        display: inline-block;
     }
 
-    .fs-badge-low {
+    .fs-badge--low {
         background: #e8f8f5;
         color: #1e8449;
         border: 1px solid #a9dfbf;
-        border-radius: 20px;
-        padding: 0.25rem 0.8rem;
-        font-size: 0.85rem;
-        font-weight: 600;
-        display: inline-block;
-    }
-
-    /* ── Column spacing ── */
-    .fs-col-gap > div[data-testid="column"] {
-        padding-left: 0.4rem;
-        padding-right: 0.4rem;
     }
 
     /* ── Mobile ── */
     @media screen and (max-width: 768px) {
-    
-        .appview-container .main .block-container {
-            padding-top: 2.5rem;
-            padding-left: 1rem;
-            padding-right: 1rem;
+        .stMainBlockContainer {
+            padding: 3rem 1rem 2rem;
         }
 
         .fs-title {
             font-size: 1.3rem;
         }
 
-        .fs-card-value {
+        .fs-card__value {
             font-size: 1.4rem;
         }
 
         .fs-card {
             margin-bottom: 0.5rem;
         }
+
+        .fs-result {
+            font-size: 0.8rem;
+        }
+
+        .fs-info {
+            font-size: 0.8rem;
+        }
     }
-
-    /* ── Hide default sidebar arrow and replace with hamburger ── */
-    button[data-testid="baseButton-headerNoPadding"] {
-        display: none;
-    }
-
-    [data-testid="collapsedControl"] {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 2.2rem;
-        height: 2.2rem;
-        background: #1a1a2e;
-        border-radius: 6px;
-        cursor: pointer;
-        top: 0.6rem;
-        left: 0.6rem;
-        position: fixed;
-        z-index: 999;
-    }
-
-    [data-testid="collapsedControl"]::before {
-        content: "";
-        display: block;
-        width: 16px;
-        height: 2px;
-        background: #ffffff;
-        box-shadow: 0 5px 0 #ffffff, 0 10px 0 #ffffff;
-    }
-
-
     </style>
     """, unsafe_allow_html=True)
 
 
 def metric_card(label, value, sub=None):
-    """Reusable metric card — label, large value, optional subtitle"""
-    sub_html = f'<div class="fs-card-sub">{sub}</div>' if sub else ''
+    """Reusable metric card — BEM class naming"""
+    sub_html = f'<div class="fs-card__sub">{sub}</div>' if sub else ''
     st.markdown(f"""
     <div class="fs-card">
-        <div class="fs-card-label">{label}</div>
-        <div class="fs-card-value">{value}</div>
+        <div class="fs-card__label">{label}</div>
+        <div class="fs-card__value">{value}</div>
         {sub_html}
     </div>
     """, unsafe_allow_html=True)
 
 
 def risk_badge(risk):
-    """Color coded risk badge — pass High, Medium or Low"""
-    css_class = f"fs-badge-{risk.lower()}"
+    """Color coded risk badge using BEM modifier classes"""
+    modifier = risk.lower()
     st.markdown(
-        f'<span class="{css_class}">{risk} Risk</span>',
+        f'<span class="fs-badge fs-badge--{modifier}">{risk} Risk</span>',
         unsafe_allow_html=True
     )
 
 
 def section_header(text):
-    """Section header with blue underline — width matches text"""
+    """Section header with blue underline"""
     st.markdown(
         f'<div class="fs-section">{text}</div>',
         unsafe_allow_html=True
@@ -240,9 +232,9 @@ def info_box(text):
     )
 
 
-def result_box(html_content):
-    """Green tinted result box for prediction output"""
+def result_box(text):
+    """Green tinted result box — plain text only, no duplicate colour box"""
     st.markdown(
-        f'<div class="fs-result">{html_content}</div>',
+        f'<div class="fs-result">{text}</div>',
         unsafe_allow_html=True
     )
