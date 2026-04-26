@@ -211,6 +211,7 @@ Eastern counties due to higher Atlantic rainfall.
 
 ---
 
+
 ## Bug Fixes
 
 | Bug | Fix Applied |
@@ -220,7 +221,14 @@ Eastern counties due to higher Atlantic rainfall.
 | Notebook JSON error on empty file | Replaced touch command with valid JSON scaffold |
 | Location outside Ireland showing for valid Irish locations | Added all Irish country name variants to geocoder check |
 | Matplotlib deprecation warning on boxplot labels parameter | Renamed labels to tick_labels |
-| colour_map defined twice in predictor page | Moved to single COLOUR_MAP definition at function top |
+| Results not showing after map click | Moved results block outside columns to span full width |
+| Infinite rerun loop on map click | Added click_key tracking to only process new clicks |
+| Old location data showing when new location loads | Replaced text_input with st.form — only triggers on submit |
+| Input box not clearing when map clicked | Form clear_on_submit=True handles clearing natively |
+| Same area clicks being skipped | Increased click precision from 3dp to 4dp (111m to 11m resolution) |
+| Rate limiting error 429 from Nominatim | Added time.sleep(1) to respect 1 request per second limit |
+| River distance stuck at 200m | Replaced Overpass API with OPW station proximity calculation |
+| Location lookup unavailable for small Irish towns | Changed country name check to country_code ie for reliability |
 
 
 ---
