@@ -179,6 +179,24 @@ Eastern counties due to higher Atlantic rainfall.
 
 ---
 
+
+## Tech Stack
+
+| Layer | Technology | Purpose |
+|-------|-----------|---------|
+| Language | Python 3.13 | Core development language |
+| Dashboard | Streamlit | Interactive web application |
+| ML | scikit-learn | Random Forest classifier and regressor |
+| Data | pandas, numpy | Data manipulation and analysis |
+| Visualisation | Plotly, Matplotlib, Seaborn | Interactive and static charts |
+| Statistics | SciPy | Chi-square and t-tests |
+| Mapping | Folium, streamlit-folium | Interactive map with location marker |
+| Geocoding | Geopy Nominatim | Convert location name to coordinates |
+| Elevation | Open-Elevation API | Real elevation data for any Irish location |
+| River Distance | OSM Overpass API | Distance to nearest river or waterway |
+| Version Control | Git and GitHub | Code versioning and collaboration |
+| Deployment | Streamlit Community Cloud | Free public hosting |
+
 ## Libraries
 
 | Library | Purpose |
@@ -190,6 +208,31 @@ Eastern counties due to higher Atlantic rainfall.
 | Plotly | Interactive charts on dashboard |
 | SciPy | Statistical tests — chi-square and t-tests |
 | Folium | Static flood zone map on predictor page |
+
+---
+
+## Bug Fixes
+
+| Bug | Fix Applied |
+|-----|------------|
+| Streamlit rerender clearing prediction results | Fixed using st.session_state to persist results |
+| venv broken after folder rename from floodiq to floodsave | Deleted and recreated venv |
+| Notebook JSON error on empty file | Replaced touch command with valid JSON scaffold |
+| Location outside Ireland showing for valid Irish locations | Added all Irish country name variants to geocoder check |
+| Matplotlib deprecation warning on boxplot labels parameter | Renamed labels to tick_labels |
+| colour_map defined twice in predictor page | Moved to single COLOUR_MAP definition at function top |
+
+
+---
+
+## Known Limitations
+- Map marker updates after full page rerender, not in real time while typing
+- Distance to river is estimated at 200m by default — exact distance requires additional data source
+- Elevation is fetched from Open-Elevation API which may be slow on first load
+- Flood depth predictions are most accurate for locations near 
+  monitored rivers. For locations over 2km from the nearest OPW 
+  station the depth prediction extrapolates outside the training 
+  data range and should be treated as indicative only.
 
 ---
 
@@ -205,3 +248,18 @@ Eastern counties due to higher Atlantic rainfall.
   using flood risk combined with sunshine hours, 
   rainfall and soil type data
 - Reverse geocoding to show nearest town for each station
+- OPW flood zone boundary overlay on map using WMS layer from floodinfo.ie
+- Real-time flood alerts when OPW water levels exceed threshold in a given area
+- OPW flood zone boundary overlay on predictor map 
+  (requires verified WMS endpoint from floodinfo.ie)
+- Rainfall-based flood prediction — user inputs expected rainfall 
+  in mm over a given number of hours to estimate if local roads 
+  or areas are at risk of flooding
+- Turlough and seasonal flood plain mapping using OPW CFRAM dataset
+- Known flood-prone road sections overlay using historical OPW 
+  past flood event data
+- River distance is calculated using the 457 OPW hydrometric 
+  stations as river proximity indicators. This accurately reflects 
+  distance to major monitored rivers but may underestimate proximity 
+  to smaller unmonitored streams and drainage channels. A full Irish 
+  river network dataset would improve accuracy.
