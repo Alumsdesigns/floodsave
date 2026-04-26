@@ -1,6 +1,3 @@
-# Purpose: User inputs location by name or clicks map to get flood risk prediction
-# Criteria: 4.1, 5.4, D7
-
 import streamlit as st
 import folium
 import time
@@ -233,13 +230,11 @@ def page_risk_predictor():
                     st.session_state.pred_result = run_prediction(
                         elevation, distance or 500, clicked_lat, clicked_lon
                     )
-                    # rerun forces left column cards to update
                     st.rerun()
 
                 else:
                     st.warning("Click within Ireland to get a prediction.")
 
-    # ── RESULTS — outside both columns, spans full width ──
     if st.session_state.pred_result is not None:
         result = st.session_state.pred_result
         risk = result['risk_category']
