@@ -56,11 +56,20 @@ graph TD
     vs East county region
     on max_flood_depth"]:::test
 
-    PASS["Validated
+    PASS1["Validated p=0.0000
     ─────────────
-    p less than 0.05
-    Documented in README
-    and dashboard page"]:::pass
+    Chi-square confirmed
+    elevation vs risk"]:::pass
+
+    PASS2["Validated p=0.0000
+    ─────────────
+    T-test confirmed
+    river distance vs risk"]:::pass
+
+    PASS3["Validated p=0.0007
+    ─────────────
+    T-test confirmed
+    West vs East depth"]:::pass
 
     FAIL["Not Supported
     ─────────────
