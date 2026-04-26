@@ -14,12 +14,12 @@ using GridSearchCV across 6 hyperparameters with 3+ values each.
 - This is the hardest single distinction requirement — this diagram 
   proves every hyperparameter choice was deliberate
 
-## Version A: Predictor page includes folium map
-User enters county + elevation + distance to river
-Model returns risk classification + flood depth
-Static folium map shows flood zones for that county
-Satisfies criteria 4.1, 5.4 and D7 (professional UX)
-Makes this project genuinely publishable and bonus also interview-ready
+## Predictor page — dynamic interactive map
+User types any Irish location or clicks anywhere on the map
+Real elevation fetched from Open-Elevation API
+Real river distance fetched from OSM Overpass API
+Model returns risk classification and flood depth
+Interactive Folium map updates marker on prediction
 
 ```mermaid
 flowchart LR
