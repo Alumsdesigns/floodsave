@@ -5,6 +5,7 @@
 **Email:** alum.damaris@gmail.com
 **View the Floodsave Web Application:** [View Deployed Site](https://floodsave-bf0f49c3b6af.herokuapp.com/) 
 
+
 Enjoy learning more about flood risks in different areas
 
 ---
@@ -195,6 +196,10 @@ updated continuously by OPW hydrometric data loggers across Ireland.
 list was pulled in April 2026 and contains 457 active monitoring stations.
 Each station transmits water level data via GPRS telemetry at regular
 intervals. The dataset is licensed under Creative Commons CC-BY 4.0.
+
+**Ethics and Privacy:** The OPW dataset is published under Creative Commons 
+CC-BY 4.0 licence. It is publicly available and contains no personal data. 
+No anonymisation was required.
 
 Each row represents one OPW hydrometric monitoring station with the
 following attributes:
@@ -436,20 +441,20 @@ a member of the public with no technical background.
 
 ## Libraries
 
-| Library | Purpose |
-|---------|---------|
-| streamlit | Interactive dashboard interface |
-| scikit-learn | Random Forest models, GridSearchCV, preprocessing |
-| matplotlib | Static charts and plots in notebooks |
-| seaborn | Statistical visualisations in notebooks |
-| plotly | Interactive charts on dashboard |
-| scipy | Statistical tests — chi-square and t-tests |
-| folium | Interactive map on predictor page |
-| streamlit-folium | Renders Folium map inside Streamlit |
-| geopy | Geocodes location names to coordinates |
-| joblib | Saves and loads trained model pipelines |
-| pandas | Data manipulation and CSV handling |
-| numpy | Numerical computation |
+| Library | Purpose | Example Usage |
+|---------|---------|---------------|
+| streamlit | Interactive dashboard interface | st.plotly_chart() renders interactive charts |
+| scikit-learn | Random Forest models, GridSearchCV | RandomForestClassifier with GridSearchCV — 486 combinations |
+| matplotlib | Static charts in notebooks | plt.savefig() saves plots to outputs/v1/plots/ |
+| seaborn | Statistical visualisations | sns.heatmap() for correlation matrix in notebooks |
+| plotly | Interactive charts on dashboard | px.histogram() for elevation distribution chart |
+| scipy | Statistical tests | chi2_contingency() for hypothesis 1 chi-square test |
+| folium | Interactive map | folium.Map() with click-to-predict on Risk Predictor page |
+| streamlit-folium | Renders Folium map inside Streamlit | st_folium() returns last_clicked coordinates |
+| geopy | Geocodes location names | Nominatim().geocode() converts town name to lat/lng |
+| joblib | Saves and loads ML pipelines | joblib.load() reads classification_pipeline.pkl |
+| pandas | Data manipulation | pd.read_csv() loads featured_data.csv for EDA |
+| numpy | Numerical computation | np.array() used in haversine distance calculation |
 
 ---
 
