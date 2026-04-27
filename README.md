@@ -26,14 +26,15 @@ Enjoy learning more about flood risks in different areas
 13. [Rationale to Map Business Requirements to ML Tasks](#rationale-to-map-business-requirements-to-ml-tasks)
 14. [Dashboard Design](#dashboard-design)
 15. [Saved Plot Outputs](#saved-plot-outputs)
-16. [Tech Stack](#tech-stack)
-17. [Libraries](#libraries)
-18. [Bug Fixes](#bug-fixes)
-19. [Known Limitations](#known-limitations)
-20. [Future Enhancements](#future-enhancements)
-21. [Note for Assessors](#note-for-assessors)
-22. [License](#license)
-23. [Acknowledgements](#acknowledgements)
+16. [Testing and Iteration](#testing-and-iteration)
+17. [Tech Stack](#tech-stack)
+18. [Libraries](#libraries)
+19. [Bug Fixes](#bug-fixes)
+20. [Known Limitations](#known-limitations)
+21. [Future Enhancements](#future-enhancements)
+22. [Note for Assessors](#note-for-assessors)
+23. [License](#license)
+24. [Acknowledgements](#acknowledgements)
 
 ---
 
@@ -96,6 +97,21 @@ The dashboard follows these UX principles:
   Sidebar collapses to hamburger menu on mobile
 - **User control:** No auto-playing content. All predictions triggered
   by explicit user action
+- **Colour palette:** Dark navy `#1a1a2e` for headings, primary blue `#4a90d9`
+  for interactive elements and section underlines, white `#ffffff` for card
+  backgrounds. Risk levels use semantic colours — red `#c0392b` for High,
+  amber `#d35400` for Medium, green `#1e8449` for Low. All colours meet
+  WCAG AA contrast standard
+- **Typography:** Two font pairing — Plus Jakarta Sans (Google Fonts) for
+  headings and display values, DM Sans (Google Fonts) for body text and UI
+  labels. Six level typographic scale: H1 page titles at 2.2rem/800 weight,
+  H2 section headers at 1.15rem/600 weight, display card values at 1.75rem/700
+  weight, card labels at 0.70rem/600 uppercase, body text at 0.90rem/400,
+  subtitles at 0.78rem/400. All levels have explicit line-height and
+  letter-spacing defined
+- **Component library:** Shared reusable components in src/styles.py — metric
+  cards, info boxes, result boxes, risk badges, section headers and back to
+  top button. All built with BEM CSS naming convention
 
 ---
 
@@ -355,6 +371,50 @@ notebook execution for reference:
 
 ---
 
+## Testing and Iteration
+
+### Manual Testing
+
+The dashboard was tested manually across all five pages during development.
+Each feature was verified to work as expected before being committed.
+
+| Test | Expected | Result |
+|------|----------|--------|
+| Location search returns result | Prediction displays below map | Pass |
+| Map click triggers prediction | Results update automatically | Pass |
+| Search outside Ireland rejected | Warning message displayed | Pass |
+| Back to top button scrolls page | Returns to page anchor | Pass |
+| Sidebar collapses on mobile | Hamburger menu appears | Pass |
+| All 5 pages load without error | Content renders correctly | Pass |
+| Model loads pkl files correctly | No import errors on startup | Pass |
+
+### End User Testing
+
+The dashboard was tested with three end users representing the target
+audience — a construction professional, an insurance professional and
+a member of the public with no technical background.
+
+**Feedback received and acted on:**
+
+| Feedback | Action Taken |
+|----------|-------------|
+| Plain English explanation needed for each chart | Added info_box text above every plot explaining what the chart shows and how to read it |
+| Results were not visible after clicking the map | Moved prediction results outside the two-column layout so they span full width |
+| Location input was not clearing after a map click | Replaced st.text_input with st.form using clear_on_submit=True |
+| Clicking the same area repeatedly caused freezing | Added click_key tracking at 4dp precision to detect only new clicks |
+| P-value explanation was unclear | Added plain English p-value definition at top of Hypothesis Validation page |
+
+### Browser Testing
+
+| Browser | Result |
+|---------|--------|
+| Chrome | Pass |
+| Firefox | Pass |
+| Safari | Pass |
+| Mobile Chrome | Pass |
+
+---
+
 ## Tech Stack
 
 | Layer | Technology | Purpose |
@@ -370,7 +430,7 @@ notebook execution for reference:
 | Elevation | Open-Elevation API | Real elevation data for any Irish location |
 | River Distance | OPW station proximity | Haversine distance to nearest OPW station |
 | Version Control | Git and GitHub | Code versioning and collaboration |
-| Deployment | Streamlit Community Cloud | Free public hosting |
+| Deployment | Heroku | Cloud platform for live deployment |
 
 ---
 
@@ -443,6 +503,8 @@ notebook execution for reference:
 - Full Irish river network dataset to improve river distance accuracy
 - Dedicated top navigation bar for mobile users
 
+---
+
 ## Note for Assessors
 
 This project demonstrates:
@@ -468,3 +530,4 @@ Educational project for Code Institute Portfolio Project 5 — Predictive Analyt
 
 - OPW (Office of Public Works) for the real-time water level API at waterlevel.ie
 - Open-Elevation API for elevation data
+- Code Institute for the course structure and assessment framework
