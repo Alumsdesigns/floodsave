@@ -29,13 +29,14 @@ Enjoy learning more about flood risks in different areas
 15. [Saved Plot Outputs](#saved-plot-outputs)
 16. [Testing and Iteration](#testing-and-iteration)
 17. [Tech Stack](#tech-stack)
-18. [Libraries](#libraries)
-19. [Bug Fixes](#bug-fixes)
-20. [Known Limitations](#known-limitations)
-21. [Future Enhancements](#future-enhancements)
-22. [Note for Assessors](#note-for-assessors)
-23. [License](#license)
-24. [Acknowledgements](#acknowledgements)
+18. [Deployment](#deployment)
+19. [Main Data Analysis and Machine Learning Libraries](#main-data-analysis-and-machine-learning-libraries)
+20. [Bug Fixes](#bug-fixes)
+21. [Unfixed Bugs](#unfixed-bugs)
+22. [Future Enhancements](#future-enhancements)
+23. [Credits](#credits)
+24. [Note for Assessors](#note-for-assessors)
+25. [License](#license)
 
 ---
 
@@ -78,7 +79,7 @@ statistically — Western stations show mean flood depth of 1.028m versus
 | Data Preparation | Notebook 02 cleaning, Notebook 03 feature engineering |
 | Modelling | Notebook 06 classification, Notebook 07 regression |
 | Evaluation | Confusion matrix, R2 score, hypothesis tests |
-| Deployment | Streamlit Community Cloud |
+| Deployment | Heroku — https://floodsave-bf0f49c3b6af.herokuapp.com |
 
 ---
 
@@ -168,7 +169,6 @@ floodsave/
 ├── requirements.txt
 ├── runtime.txt
 └── setup.sh
-
 ```
 
 ---
@@ -439,7 +439,32 @@ a member of the public with no technical background.
 
 ---
 
-## Libraries
+## Deployment
+
+The application is deployed on Heroku.
+
+**Live Site:** https://floodsave-bf0f49c3b6af.herokuapp.com
+
+### Deployment Steps
+1. Created Heroku app via Heroku dashboard
+2. Connected GitHub repository Alumsdesigns/floodsave
+3. Deployed from main branch
+4. Heroku-24 stack with Python 3.13
+5. All deployment files maintained in repo — Procfile, runtime.txt, setup.sh
+
+### Local Development
+```bash
+git clone git@github.com:Alumsdesigns/floodsave.git
+cd floodsave
+python -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+streamlit run app.py
+```
+
+---
+
+## Main Data Analysis and Machine Learning Libraries
 
 | Library | Purpose | Example Usage |
 |---------|---------|---------------|
@@ -478,7 +503,7 @@ a member of the public with no technical background.
 
 ---
 
-## Known Limitations
+## Unfixed Bugs
 
 - Browser console shows iframe sandbox warnings from the streamlit-folium
   library. This is a known third-party issue and does not affect functionality
@@ -510,6 +535,18 @@ a member of the public with no technical background.
 
 ---
 
+## Credits
+
+- OPW Real-Time Water Levels API — waterlevel.ie — CC-BY 4.0 licence
+- Open-Elevation API — open-elevation.com — open source elevation data
+- Code Institute walkthrough projects — Churnometer and Heritage Housing 
+  Issues — used as inspiration for CRISP-DM structure and README format
+- Streamlit documentation — docs.streamlit.io
+- Scikit-learn documentation — scikit-learn.org
+- Folium documentation — python-visualization.github.io/folium
+
+---
+
 ## Note for Assessors
 
 This project demonstrates:
@@ -529,10 +566,4 @@ This project demonstrates:
 
 Educational project for Code Institute Portfolio Project 5 — Predictive Analytics.
 
----
 
-## Acknowledgements
-
-- OPW (Office of Public Works) for the real-time water level API at waterlevel.ie
-- Open-Elevation API for elevation data
-- Code Institute for the course structure and assessment framework
