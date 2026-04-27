@@ -122,6 +122,10 @@ def page_risk_predictor():
                 use_container_width=True
             )
 
+        # show warning if user submits empty form — prevents silent fail
+        if submitted and not location_input:
+            st.warning("Please enter a location name before searching.")
+
          # only process on form submit — not on every rerender
         if submitted and location_input:
             lat, lon = None, None

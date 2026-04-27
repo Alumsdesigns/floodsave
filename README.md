@@ -87,33 +87,17 @@ statistically — Western stations show mean flood depth of 1.028m versus
 
 The dashboard follows these UX principles:
 
-- **Information hierarchy:** Summary page first, predictor last — users
-  understand context before making predictions
-- **Consistency:** Same card components, colour scheme and layout
-  pattern across all 5 pages via shared src/styles.py
-- **User feedback:** Status messages and spinners confirm every action
-  is processing — users are never left waiting without feedback
-- **Accessibility:** Colour contrast meets WCAG AA standard (minimum 4.5:1 ratio).
-  All charts include text labels and hover tooltips for screen reader compatibility
-- **Mobile responsive:** Single column layout on screens below 1024px.
-  Sidebar collapses to hamburger menu on mobile
+- **Information hierarchy:** Summary page first, predictor last — users understand context before making predictions
+- **Consistency:** Same card components, colour scheme and layout pattern across all 5 pages via shared src/styles.py
+- **User feedback:** Status messages and spinners confirm every action is processing — users are never left waiting without feedback
+- **Accessibility:** Colour contrast meets WCAG AA standard (minimum 4.5:1 ratio). All charts include text labels and hover tooltips for screen reader compatibility
+- **Mobile responsive:** Single column layout on screens below 1024px. Sidebar collapses to hamburger menu on mobile
 - **User control:** No auto-playing content. All predictions triggered
   by explicit user action
-- **Colour palette:** Dark navy `#1a1a2e` for headings, primary blue `#4a90d9`
-  for interactive elements and section underlines, white `#ffffff` for card
-  backgrounds. Risk levels use semantic colours — red `#c0392b` for High,
-  amber `#d35400` for Medium, green `#1e8449` for Low. All colours meet
-  WCAG AA contrast standard
-- **Typography:** Two font pairing — Plus Jakarta Sans (Google Fonts) for
-  headings and display values, DM Sans (Google Fonts) for body text and UI
-  labels. Six level typographic scale: H1 page titles at 2.2rem/800 weight,
-  H2 section headers at 1.15rem/600 weight, display card values at 1.75rem/700
-  weight, card labels at 0.70rem/600 uppercase, body text at 0.90rem/400,
-  subtitles at 0.78rem/400. All levels have explicit line-height and
-  letter-spacing defined
-- **Component library:** Shared reusable components in src/styles.py — metric
-  cards, info boxes, result boxes, risk badges, section headers and back to
-  top button. All built with BEM CSS naming convention
+- **Colour palette:** Dark navy `#1a1a2e` for headings, primary blue `#4a90d9`for interactive elements and section underlines, white `#ffffff` for card backgrounds. Risk levels use semantic colours — red `#c0392b` for High, amber `#d35400` for Medium, green `#1e8449` for Low. All colours meet WCAG AA contrast standard
+- **Typography:** Two font pairing — Plus Jakarta Sans (Google Fonts) for headings and display values, DM Sans (Google Fonts) for body text and UI labels. Six level typographic scale: H1 page titles at 2.2rem/800 weight, H2 section headers at 1.15rem/600 weight, display card values at 1.75rem/700 weight, card labels at 0.70rem/600 uppercase, body text at 0.90rem/400, subtitles at 0.78rem/400. All levels have explicit line-height and letter-spacing defined
+- **Component library:** Shared reusable components in src/styles.py — metric cards, info boxes, result boxes, risk badges, section headers and back to top button. All built with BEM CSS naming convention
+- **User control:** No auto-playing content. All predictions triggered by explicit user action. Empty form submission returns a clear warning message rather than silently failing, all interactions produce visible feedback
 
 ---
 
@@ -392,6 +376,7 @@ Each feature was verified to work as expected before being committed.
 | Sidebar collapses on mobile | Hamburger menu appears | Pass |
 | All 5 pages load without error | Content renders correctly | Pass |
 | Model loads pkl files correctly | No import errors on startup | Pass |
+| Empty search form submitted | Warning message displayed | Pass |
 
 ### End User Testing
 
@@ -500,6 +485,7 @@ streamlit run app.py
 | Rate limiting error 429 from Nominatim | Added time.sleep(1) to respect rate limit |
 | River distance stuck at 200m default | Replaced Overpass API with OPW station haversine calculation |
 | Location lookup unavailable for small Irish towns | Switched to country_code ie check for reliability |
+| Search form submitted with empty input gave no feedback | Added st.warning message when form submitted without location input |
 
 ---
 
