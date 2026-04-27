@@ -1,14 +1,19 @@
-# Purpose: EDA page with 4 interactive Plotly charts answering BR1
-# Criteria: 3.1, 6.2, 6.4, 6.5, D5
+# app_pages/page_flood_risk_study.py
+# Exploratory data analysis page — 4 interactive Plotly charts
+# Each plot answers Business Requirement 1 (feature correlations with flood risk)
+# Criteria: 3.1 (data analysis), 6.2 (plot interpretations),
+#           6.4 (4 plot types), 6.5 (interactive viz), D5 (4 plot types)
 
 import streamlit as st
 import plotly.express as px
-import plotly.graph_objects as go
-from src.styles import section_header, info_box
+from src.styles import section_header, info_box, back_to_top
 from src.data_management import load_featured_data
 
 
 def page_flood_risk_study():
+    # named anchor for back to top button
+    st.markdown('<div id="floodsave-top"></div>', unsafe_allow_html=True)
+    
     st.markdown('<div class="fs-title">Flood Risk Study</div>',
                 unsafe_allow_html=True)
     st.markdown('<div class="fs-subtitle">Exploratory analysis of Irish flood risk patterns across 457 OPW stations</div>',
@@ -16,7 +21,6 @@ def page_flood_risk_study():
 
     df = load_featured_data()
 
-    # Plot 1 — Histogram
     section_header("Plot 1 — Elevation Distribution")
     info_box("""
         What this shows: A count of how many OPW monitoring stations
@@ -46,7 +50,9 @@ def page_flood_risk_study():
         showlegend=False,
         plot_bgcolor='white',
         paper_bgcolor='white',
-        margin=dict(t=50, b=40, l=40, r=20)
+        margin=dict(t=80, b=40, l=40, r=20),
+        modebar_remove=['toImage', 'zoom', 'pan', 'resetScale2d',
+                        'zoomIn2d', 'zoomOut2d', 'autoScale2d']
     )
     st.plotly_chart(fig1, use_container_width=True)
 
@@ -87,10 +93,12 @@ def page_flood_risk_study():
     )
     fig2.update_traces(marker=dict(size=7, opacity=0.7))
     fig2.update_layout(
-        plot_bgcolor='white',
-        paper_bgcolor='white',
-        margin=dict(t=50, b=40, l=40, r=20)
-    )
+            plot_bgcolor='white',
+            paper_bgcolor='white',
+            margin=dict(t=80, b=40, l=40, r=20),
+            modebar_remove=['toImage', 'zoom', 'pan', 'resetScale2d',
+                            'zoomIn2d', 'zoomOut2d', 'autoScale2d']
+        )
     st.plotly_chart(fig2, use_container_width=True)
 
     # Plot 3 — Heatmap
@@ -117,8 +125,10 @@ def page_flood_risk_study():
         labels=dict(color='Correlation')
     )
     fig3.update_layout(
-        margin=dict(t=50, b=40, l=40, r=20),
-        paper_bgcolor='white'
+        margin=dict(t=80, b=40, l=40, r=20),
+        paper_bgcolor='white',
+        modebar_remove=['toImage', 'zoom', 'pan', 'resetScale2d',
+                        'zoomIn2d', 'zoomOut2d', 'autoScale2d']
     )
     st.plotly_chart(fig3, use_container_width=True)
 
@@ -151,7 +161,9 @@ def page_flood_risk_study():
         showlegend=False,
         plot_bgcolor='white',
         paper_bgcolor='white',
-        margin=dict(t=50, b=40, l=40, r=20)
+        margin=dict(t=80, b=40, l=40, r=20),
+        modebar_remove=['toImage', 'zoom', 'pan', 'resetScale2d',
+                        'zoomIn2d', 'zoomOut2d', 'autoScale2d']
     )
     st.plotly_chart(fig4, use_container_width=True)
 
@@ -163,3 +175,7 @@ def page_flood_risk_study():
     with col2:
         info_box("Western stations show higher flood depth than Eastern stations due to Atlantic rainfall.")
         info_box("All four plots together answer BR1 — geographic features correlate strongly with flood risk.")
+
+
+    # back to top page function
+    back_to_top()

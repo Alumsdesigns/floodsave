@@ -1,16 +1,29 @@
-# Purpose: Display 3 hypothesis results with statistical evidence
-# Criteria: 1.2, 2.3, 4.3, D3
+# app_pages/page_hypothesis_validation.py
+# Displays 3 hypothesis results with statistical test evidence
+# Each hypothesis was defined before modelling and tested in Notebook 05
+# Criteria: 1.2 (hypotheses in README), 2.3 (statistical validation),
+# 4.3 (conclusions on dashboard), D3 (3+ hypotheses validated)
 
 import streamlit as st
-from src.styles import section_header, info_box, metric_card
+from src.styles import section_header, info_box, metric_card, back_to_top
 
 
 def page_hypothesis_validation():
-    st.markdown('<div class="fs-title">Hypothesis Validation</div>', unsafe_allow_html=True)
-    st.markdown('<div class="fs-subtitle">Statistical validation of 3 flood risk hypotheses using OPW data</div>', unsafe_allow_html=True)
+    # named anchor allows back to top button to scroll here
+    st.markdown('<div id="floodsave-top"></div>', unsafe_allow_html=True)
 
+    # page title and subtitle
+    st.markdown('<div class="fs-title">Hypothesis Validation</div>',
+                unsafe_allow_html=True)
+    st.markdown(
+        '<div class="fs-subtitle">Statistical validation of 3 flood risk hypotheses using OPW data</div>',
+        unsafe_allow_html=True
+    )
+
+    # explain p-value in plain English for non-technical users
     info_box("All three hypotheses were tested using standard statistical methods. A p-value below 0.05 means the result is statistically significant — less than 5% chance it happened by random chance.")
 
+    # hypothesis 1 — elevation vs flood risk — chi-square test
     section_header("Hypothesis 1 — Elevation and Flood Risk")
     info_box("Claim: Properties at lower elevation have significantly higher flood risk than those at higher elevation.")
 
@@ -24,7 +37,7 @@ def page_hypothesis_validation():
 
     info_box("Finding: Low elevation stations have significantly higher flood risk. The chi-square test confirms the relationship between elevation category and flood risk category is not random.")
 
-    st.markdown("---")
+    # hypothesis 2 — distance to river — independent t-test
     section_header("Hypothesis 2 — Distance to River")
     info_box("Claim: Stations within 100m of a river have significantly higher flood risk than those further away.")
 
@@ -36,6 +49,7 @@ def page_hypothesis_validation():
     with col3:
         metric_card("Result", "SUPPORTED", "p less than 0.05")
 
+    # mean risk scores show clear separation between groups
     col1, col2 = st.columns(2)
     with col1:
         metric_card("Mean Risk Close", "1.19", "within 100m of river")
@@ -44,7 +58,7 @@ def page_hypothesis_validation():
 
     info_box("Finding: Stations within 100m of a river have a mean risk score of 1.19 versus 0.74 for stations further away. Being close to a river significantly increases flood risk.")
 
-    st.markdown("---")
+    # hypothesis 3 — west vs east flood depth — independent t-test
     section_header("Hypothesis 3 — West vs East Flood Depth")
     info_box("Claim: Western counties have higher average flood depth than Eastern counties due to Atlantic rainfall.")
 
@@ -56,6 +70,7 @@ def page_hypothesis_validation():
     with col3:
         metric_card("Result", "SUPPORTED", "p less than 0.05")
 
+    # station counts show west has far more monitored stations
     col1, col2 = st.columns(2)
     with col1:
         metric_card("West Mean Depth", "1.03m", "277 stations")
@@ -64,6 +79,9 @@ def page_hypothesis_validation():
 
     info_box("Finding: Western counties show mean flood depth of 1.03m versus 0.77m in Eastern counties. Atlantic weather systems hit the West coast first before reaching the rain shadow of the Wicklow and Silvermine mountains.")
 
-    st.markdown("---")
+    # overall conclusions — links back to ML feature selection decision
     section_header("Overall Conclusions")
     info_box("All three hypotheses were supported by the data. Elevation and distance to river are the two strongest predictors of flood risk. Western Ireland experiences deeper flooding than Eastern Ireland due to geography and rainfall patterns. These findings directly informed the feature selection for the Random Forest ML model.")
+
+    # back to top button — fixed position bottom right
+    back_to_top()
