@@ -2,6 +2,7 @@
 # Shared CSS and reusable UI components for all dashboard pages
 # Call apply_custom_css() once in app.py — all pages inherit styles
 # Uses BEM naming convention for CSS classes: block__element--modifier
+# Typography: Plus Jakarta Sans (headings) + DM Sans (body) — professional data app pairing
 # Criteria: D7 (professional UX), D8 (clean code)
 
 import streamlit as st
@@ -11,18 +12,49 @@ def apply_custom_css():
     """Inject shared CSS into the Streamlit app. Call once in app.py."""
     st.markdown("""
     <style>
-    /* Base layout — overrides Streamlit default 6rem top padding */
+    /* ============================================================
+       FONTS
+       Plus Jakarta Sans — geometric, modern for headings (H1/H2)
+       DM Sans — neutral, highly legible for body and UI text
+       Both from Google Fonts — open source, no licence required
+    ============================================================ */
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=DM+Sans:wght@400;500;600&display=swap');
+
+    /* ============================================================
+       TYPOGRAPHIC SCALE — 6 levels, consistent ratio ~1.25
+       Level 1 (H1)  — page title        2.2rem / 800 / Plus Jakarta Sans
+       Level 2 (H2)  — section header    1.15rem / 600 / Plus Jakarta Sans
+       Level 3       — card value        1.75rem / 700 / Plus Jakarta Sans
+       Level 4       — card label        0.70rem / 600 / DM Sans uppercase
+       Level 5       — body / info       0.90rem / 400 / DM Sans
+       Level 6       — small / sub       0.78rem / 400 / DM Sans
+    ============================================================ */
+
+    /* Base — DM Sans for all elements, overridden per level below */
+    * {
+        font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    /* ============================================================
+       BASE LAYOUT
+    ============================================================ */
+
+    /* Overrides Streamlit default 6rem top padding */
     .stMainBlockContainer {
         padding: 2.5rem 2rem 2rem;
         max-width: 1100px;
     }
+
+    /* ============================================================
+       SIDEBAR
+    ============================================================ */
 
     /* Sidebar width constraints */
     .stSidebar {
         min-width: 220px;
         max-width: 260px;
     }
-                
+
     /* Collapsed sidebar takes zero space on tablet and mobile */
     [data-testid="stSidebar"][aria-expanded="false"] {
         width: 0;
@@ -31,10 +63,13 @@ def apply_custom_css():
     }
 
     .stSidebar .fs-title {
-        font-size: 1.2rem;
+        font-size: 1.1rem;
     }
 
-    /* Hamburger icon — replaces default Streamlit sidebar arrow */
+    /* ============================================================
+       HAMBURGER ICON — replaces default Streamlit sidebar arrow
+    ============================================================ */
+
     [data-testid="collapsedControl"] {
         display: flex;
         align-items: center;
@@ -65,34 +100,60 @@ def apply_custom_css():
         display: none;
     }
 
-    /* Page title */
+    /* ============================================================
+       TYPOGRAPHY — LEVEL 1 (H1) — Page title
+       Font: Plus Jakarta Sans 800
+       Size: 2.2rem desktop / 1.3rem mobile
+       Usage: one per page, identifies the page
+    ============================================================ */
     .fs-title {
-        font-size: 1.8rem;
-        font-weight: 700;
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        font-size: 2.2rem;
+        font-weight: 800;
         color: #1a1a2e;
         margin: 0;
-        line-height: 1.2;
+        line-height: 1.15;
+        letter-spacing: -0.03em;
     }
 
-    /* Page subtitle */
+    /* ============================================================
+       TYPOGRAPHY — LEVEL 2 (H2) — Page subtitle
+       Font: DM Sans 400
+       Size: 0.95rem
+       Usage: one per page, below the H1 title
+    ============================================================ */
     .fs-subtitle {
+        font-family: 'DM Sans', sans-serif;
         font-size: 0.95rem;
+        font-weight: 400;
         color: #555;
-        margin: 0.2rem 0 0.8rem;
+        margin: 0.25rem 0 0.9rem;
+        line-height: 1.5;
+        letter-spacing: 0;
     }
 
-    /* Section header with blue underline — inline-block keeps width to text length */
+    /* ============================================================
+       TYPOGRAPHY — LEVEL 2 (H2) — Section header
+       Font: Plus Jakarta Sans 600
+       Size: 1.15rem
+       Usage: divides page into named sections
+    ============================================================ */
     .fs-section {
         display: inline-block;
-        font-size: 1.05rem;
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        font-size: 1.15rem;
         font-weight: 600;
         color: #1a1a2e;
-        margin: 0.8rem 0 0.4rem;
-        padding-bottom: 0.25rem;
+        margin: 0.9rem 0 0.45rem;
+        padding-bottom: 0.28rem;
         border-bottom: 2px solid #4a90d9;
+        line-height: 1.3;
+        letter-spacing: -0.01em;
     }
 
-    /* Metric card — white box with subtle shadow */
+    /* ============================================================
+       METRIC CARD — white box with shadow
+    ============================================================ */
     .fs-card {
         background: #fff;
         border: 1px solid #e2e2e2;
@@ -100,65 +161,107 @@ def apply_custom_css():
         padding: 1rem 1.2rem;
         margin: 0.3rem 0;
         text-align: center;
-        box-shadow: 0 1px 4px rgba(0,0,0,.05);
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
     }
 
-    /* Card label — small uppercase text above value */
+    /* ============================================================
+       TYPOGRAPHY — LEVEL 4 — Card label
+       Font: DM Sans 600 uppercase
+       Size: 0.70rem
+       Usage: small descriptor above the card value
+    ============================================================ */
     .fs-card__label {
-        font-size: 0.72rem;
+        font-family: 'DM Sans', sans-serif;
+        font-size: 0.70rem;
         font-weight: 600;
         color: #555;
         text-transform: uppercase;
-        letter-spacing: 0.06em;
+        letter-spacing: 0.08em;
         margin-bottom: 0.3rem;
+        line-height: 1.4;
     }
 
-    /* Card value — large bold number or text */
+    /* ============================================================
+       TYPOGRAPHY — LEVEL 3 — Card value (display number)
+       Font: Plus Jakarta Sans 700
+       Size: 1.75rem
+       Usage: the primary metric — station count, accuracy score etc
+    ============================================================ */
     .fs-card__value {
-        font-size: 1.7rem;
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        font-size: 1.75rem;
         font-weight: 700;
         color: #1a1a2e;
-        line-height: 1.2;
+        line-height: 1.15;
+        letter-spacing: -0.02em;
     }
 
-    /* Card subtitle — small descriptive text below value */
+    /* ============================================================
+       TYPOGRAPHY — LEVEL 6 — Card subtitle
+       Font: DM Sans 400
+       Size: 0.78rem
+       Usage: supporting description below card value
+    ============================================================ */
     .fs-card__sub {
-        font-size: 0.8rem;
+        font-family: 'DM Sans', sans-serif;
+        font-size: 0.78rem;
+        font-weight: 400;
         color: #444;
-        margin-top: 0.25rem;
+        margin-top: 0.28rem;
+        line-height: 1.45;
     }
 
-    /* Info box — blue left border for contextual information */
+    /* ============================================================
+       INFO BOX — blue left border for contextual information
+       TYPOGRAPHY — LEVEL 5 — body text
+       Font: DM Sans 400
+       Size: 0.90rem
+    ============================================================ */
     .fs-info {
         background: #f0f7ff;
         border-left: 3px solid #4a90d9;
         border-radius: 0 6px 6px 0;
-        padding: 0.7rem 1rem;
-        font-size: 0.88rem;
+        padding: 0.75rem 1rem;
+        font-family: 'DM Sans', sans-serif;
+        font-size: 0.90rem;
+        font-weight: 400;
         color: #333;
         margin: 0.5rem 0;
-        line-height: 1.5;
+        line-height: 1.6;
     }
 
-    /* Result box — green tint for prediction outcomes */
+    /* ============================================================
+       RESULT BOX — green tint for prediction outcomes
+       TYPOGRAPHY — LEVEL 5 — body text
+       Font: DM Sans 400
+       Size: 0.90rem
+    ============================================================ */
     .fs-result {
         background: #f6fff6;
         border: 1px solid #a9dfbf;
         border-radius: 10px;
-        padding: 0.8rem 1rem;
-        font-size: 0.88rem;
+        padding: 0.85rem 1rem;
+        font-family: 'DM Sans', sans-serif;
+        font-size: 0.90rem;
+        font-weight: 400;
         color: #333;
         margin: 0.5rem 0;
-        line-height: 1.5;
+        line-height: 1.6;
     }
 
-    /* Risk badge base styles */
+    /* ============================================================
+       RISK BADGES — semantic colour per risk level
+    ============================================================ */
+
+    /* Badge base */
     .fs-badge {
         display: inline-block;
         border-radius: 20px;
-        padding: 0.25rem 0.8rem;
+        padding: 0.25rem 0.85rem;
+        font-family: 'DM Sans', sans-serif;
         font-size: 0.85rem;
         font-weight: 600;
+        line-height: 1.4;
     }
 
     /* High risk — red tones */
@@ -182,6 +285,10 @@ def apply_custom_css():
         border: 1px solid #a9dfbf;
     }
 
+    /* ============================================================
+       BACK TO TOP BUTTON
+       Fixed bottom right — blue default, inverts on hover
+    ============================================================ */
     .fs-back-top {
         position: fixed;
         bottom: 1.5rem;
@@ -199,18 +306,22 @@ def apply_custom_css():
         display: flex;
         align-items: center;
         justify-content: center;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
         text-decoration: none;
         transition: background 0.2s ease, color 0.2s ease;
     }
 
+    /* Invert colours on hover — blue arrow on white background */
     .fs-back-top:hover {
         background: #ffffff;
-        color: #4a90d9 !important;    /* force blue arrow on hover */
+        color: #4a90d9 !important;
         border: 2px solid #4a90d9;
     }
-                
-    /* Tablet and mobile — max-width 1024px */
+
+    /* ============================================================
+       RESPONSIVE — tablet and mobile max-width 1024px
+       Collapses columns, reduces font sizes, adjusts spacing
+    ============================================================ */
     @media screen and (max-width: 1024px) {
 
         /* Remove sidebar space when collapsed */
@@ -225,7 +336,7 @@ def apply_custom_css():
             min-width: 220px !important;
         }
 
-        /* Centre content and prevent overflow */
+        /* Centre content and prevent horizontal overflow */
         .stMainBlockContainer {
             padding: 3rem 1rem 2rem !important;
             margin: 0 auto !important;
@@ -234,7 +345,7 @@ def apply_custom_css():
             overflow-x: hidden !important;
         }
 
-        /* Stack columns vertically */
+        /* Stack columns vertically on small screens */
         [data-testid="stHorizontalBlock"] {
             flex-wrap: wrap !important;
         }
@@ -244,18 +355,26 @@ def apply_custom_css():
             width: 100% !important;
         }
 
-        /* Typography */
+        /* H1 scales down on mobile */
         .fs-title {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
+            letter-spacing: -0.01em;
             word-break: break-word;
         }
 
+        /* H2 subtitle scales down */
         .fs-subtitle {
             font-size: 0.85rem;
         }
 
-        .fs-card__value {
+        /* Section header scales down */
+        .fs-section {
             font-size: 1rem;
+        }
+
+        /* Card value scales down — prevents overflow on narrow screens */
+        .fs-card__value {
+            font-size: 1.1rem;
             word-break: break-word;
         }
 
@@ -263,23 +382,18 @@ def apply_custom_css():
             margin-bottom: 0.5rem;
         }
 
-        .fs-result {
-            font-size: 0.82rem;
-        }
-
+        /* Body text tightens line height on small screens */
+        .fs-result,
         .fs-info {
             font-size: 0.82rem;
-            line-height: 1.4;
-        }
-
-        .fs-section {
-            font-size: 0.95rem;
+            line-height: 1.45;
         }
 
         /* Hide divider line under map section on mobile */
         .element-container hr {
             display: none;
         }
+    }
 
     </style>
     """, unsafe_allow_html=True)
@@ -288,7 +402,8 @@ def apply_custom_css():
 def metric_card(label, value, sub=None):
     """
     Reusable metric card component.
-    Renders a white card with label, large value and optional subtitle.
+    Renders a white card with label (H4/DM Sans), large value (H3/Plus Jakarta Sans)
+    and optional subtitle (small/DM Sans).
     Uses BEM class naming: fs-card, fs-card__label, fs-card__value, fs-card__sub
     """
     sub_html = f'<div class="fs-card__sub">{sub}</div>' if sub else ''
@@ -305,6 +420,7 @@ def risk_badge(risk):
     """
     Colour coded risk badge.
     Accepts High, Medium or Low — applies matching BEM modifier class.
+    Red for High, amber for Medium, green for Low.
     """
     modifier = risk.lower()
     st.markdown(
@@ -314,7 +430,10 @@ def risk_badge(risk):
 
 
 def section_header(text):
-    """Section header with blue underline — width matches text length."""
+    """
+    Section header — H2 level with blue underline.
+    Plus Jakarta Sans 600 — width matches text length via inline-block.
+    """
     st.markdown(
         f'<div class="fs-section">{text}</div>',
         unsafe_allow_html=True
@@ -322,7 +441,10 @@ def section_header(text):
 
 
 def info_box(text):
-    """Info box with left blue border for contextual information."""
+    """
+    Info box with left blue border for contextual information.
+    DM Sans body text — light blue background, used for explanations and instructions.
+    """
     st.markdown(
         f'<div class="fs-info">{text}</div>',
         unsafe_allow_html=True
@@ -330,16 +452,22 @@ def info_box(text):
 
 
 def result_box(text):
-    """Green tinted result box for prediction outcomes."""
+    """
+    Green tinted result box for prediction outcomes.
+    DM Sans body text — used to display flood risk prediction results.
+    """
     st.markdown(
         f'<div class="fs-result">{text}</div>',
         unsafe_allow_html=True
     )
 
+
 def back_to_top():
     """
-    Back to top anchor link — uses named anchor, no JavaScript needed.
-    Avoids Streamlit React onclick conflict.
+    Back to top anchor link — fixed position bottom right on all pages.
+    Uses named anchor href — no JavaScript needed.
+    Blue default state, inverts to white background on hover.
+    Avoids Streamlit React onclick conflict by using plain HTML anchor.
     """
     st.markdown(
         '<a class="fs-back-top" href="#floodsave-top">↑</a>',
