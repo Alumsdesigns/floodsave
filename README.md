@@ -1,5 +1,33 @@
 # FloodSave — Flood Risk Prediction System
 
+**View the Floodsave Web Application:** [View Deployed Site](https://floodsave-bf0f49c3b6af.herokuapp.com/) 
+Enjoy learning more about flood risks in different areas
+
+---
+
+## Table of Contents
+
+1. [Overview](#overview)
+2. [Value and Impact](#value-and-impact)
+3. [CRISP-DM Process](#crisp-dm-process)
+4. [UX Design Decisions](#ux-design-decisions)
+5. [File Structure](#file-structure)
+6. [Dataset Content](#dataset-content)
+7. [Business Requirements](#business-requirements)
+8. [User Stories](#user-stories)
+9. [User Story to ML Task Mapping](#user-story-to-ml-task-mapping)
+10. [Hypotheses and Validation Results](#hypotheses-and-validation-results)
+11. [ML Business Case](#ml-business-case)
+12. [Rationale to Map Business Requirements to ML Tasks](#rationale-to-map-business-requirements-to-ml-tasks)
+13. [Dashboard Design](#dashboard-design)
+14. [Tech Stack](#tech-stack)
+15. [Libraries](#libraries)
+16. [Bug Fixes](#bug-fixes)
+17. [Known Limitations](#known-limitations)
+18. [Future Enhancements](#future-enhancements)
+
+---
+
 ## Overview
 FloodSave is an intelligent flood risk prediction platform that classifies
 flood risk and predicts flood depth for any Irish location using geographic
