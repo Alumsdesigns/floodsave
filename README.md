@@ -377,6 +377,7 @@ Each feature was verified to work as expected before being committed.
 | All 5 pages load without error | Content renders correctly | Pass |
 | Model loads pkl files correctly | No import errors on startup | Pass |
 | Empty search form submitted | Warning message displayed | Pass |
+| Chart zoom reset on mobile | Reset button visible and returns chart to original view | Pass |
 
 ### End User Testing
 
@@ -486,6 +487,7 @@ streamlit run app.py
 | River distance stuck at 200m default | Replaced Overpass API with OPW station haversine calculation |
 | Location lookup unavailable for small Irish towns | Switched to country_code ie check for reliability |
 | Search form submitted with empty input gave no feedback | Added st.warning message when form submitted without location input |
+| Charts difficult to reset on mobile after zooming | Restored resetScale2d button to all Plotly charts |
 
 ---
 

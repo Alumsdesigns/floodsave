@@ -68,7 +68,7 @@ def page_model_performance():
         yaxis_title='Actual',
         paper_bgcolor='white',
         margin=dict(t=80, b=40, l=40, r=20),
-        modebar_remove=['toImage', 'zoom', 'pan', 'resetScale2d',
+        modebar_remove=['toImage', 'zoom', 'pan',
                         'zoomIn2d', 'zoomOut2d', 'autoScale2d']
     )
     st.plotly_chart(fig_cm, use_container_width=True)
@@ -112,7 +112,7 @@ def page_model_performance():
         plot_bgcolor='white',
         coloraxis_showscale=False,
         margin=dict(t=80, b=40, l=40, r=20),
-        modebar_remove=['toImage', 'zoom', 'pan', 'resetScale2d',
+        modebar_remove=['toImage', 'zoom', 'pan',
                         'zoomIn2d', 'zoomOut2d', 'autoScale2d']
     )
     st.plotly_chart(fig_imp, use_container_width=True)

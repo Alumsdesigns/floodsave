@@ -51,7 +51,7 @@ def page_flood_risk_study():
         plot_bgcolor='white',
         paper_bgcolor='white',
         margin=dict(t=80, b=40, l=40, r=20),
-        modebar_remove=['toImage', 'zoom', 'pan', 'resetScale2d',
+        modebar_remove=['toImage', 'zoom', 'pan',
                         'zoomIn2d', 'zoomOut2d', 'autoScale2d']
     )
     st.plotly_chart(fig1, use_container_width=True)
@@ -96,7 +96,7 @@ def page_flood_risk_study():
             plot_bgcolor='white',
             paper_bgcolor='white',
             margin=dict(t=80, b=40, l=40, r=20),
-            modebar_remove=['toImage', 'zoom', 'pan', 'resetScale2d',
+            modebar_remove=['toImage', 'zoom', 'pan',
                             'zoomIn2d', 'zoomOut2d', 'autoScale2d']
         )
     st.plotly_chart(fig2, use_container_width=True)
@@ -127,7 +127,7 @@ def page_flood_risk_study():
     fig3.update_layout(
         margin=dict(t=80, b=40, l=40, r=20),
         paper_bgcolor='white',
-        modebar_remove=['toImage', 'zoom', 'pan', 'resetScale2d',
+        modebar_remove=['toImage', 'zoom', 'pan',
                         'zoomIn2d', 'zoomOut2d', 'autoScale2d']
     )
     st.plotly_chart(fig3, use_container_width=True)
@@ -162,7 +162,7 @@ def page_flood_risk_study():
         plot_bgcolor='white',
         paper_bgcolor='white',
         margin=dict(t=80, b=40, l=40, r=20),
-        modebar_remove=['toImage', 'zoom', 'pan', 'resetScale2d',
+        modebar_remove=['toImage', 'zoom', 'pan',
                         'zoomIn2d', 'zoomOut2d', 'autoScale2d']
     )
     st.plotly_chart(fig4, use_container_width=True)
