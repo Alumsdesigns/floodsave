@@ -3,10 +3,9 @@ __pycache__/
 .env
 venv/
 .vscode/
-*.pkl
+outputs/v1/plots/*
+!outputs/v1/plots/.gitkeep
 inputs/datasets/raw/*
 !inputs/datasets/raw/.gitkeep
-outputs/v1/*
-!outputs/v1/.gitkeep
 .DS_Store
 jupyter_notebooks/.ipynb_checkpoints/
